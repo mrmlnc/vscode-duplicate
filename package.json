@@ -28,15 +28,19 @@
   ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "duplicate.execute",
-      "title": "Duplicate file"
-    }],
-    "menus": {
-      "explorer/context": [{
+    "commands": [
+      {
         "command": "duplicate.execute",
-        "group": "navigation"
-      }]
+        "title": "Duplicate file"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "duplicate.execute",
+          "group": "navigation"
+        }
+      ]
     }
   },
   "devDependencies": {
@@ -45,8 +49,8 @@
   },
   "dependencies": {
     "co": "4.6.0",
-    "cp-file": "3.1.0",
-    "lodash.escaperegexp": "4.1.1"
+    "cp-file": "3.2.0",
+    "lodash.escaperegexp": "4.1.2"
   },
   "scripts": {
     "test": "xo"
@@ -55,11 +59,28 @@
     "space": true,
     "rules": {
       "no-var": 2,
-      "prefer-const": [2, { "destructuring": "all" }],
-      "space-before-function-paren": [2, "never"],
-      "babel/arrow-parens": [2, "always"],
-      "babel/object-curly-spacing": [2, "always"],
-      "babel/generator-star-spacing": [2, "after"]
+      "prefer-const": [
+        2,
+        {
+          "destructuring": "all"
+        }
+      ],
+      "space-before-function-paren": [
+        2,
+        "never"
+      ],
+      "babel/arrow-parens": [
+        2,
+        "always"
+      ],
+      "babel/object-curly-spacing": [
+        2,
+        "always"
+      ],
+      "babel/generator-star-spacing": [
+        2,
+        "after"
+      ]
     },
     "envs": [
       "node"
