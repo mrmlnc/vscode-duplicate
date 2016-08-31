@@ -2,7 +2,7 @@
   "name": "vscode-duplicate",
   "displayName": "Duplicate file",
   "description": "Ability to duplicate files in VS Code",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "mrmlnc",
   "license": "MIT",
   "engines": {
@@ -34,8 +34,7 @@
     }],
     "menus": {
       "explorer/context": [{
-        "command": "duplicate.execute",
-        "group": "navigation"
+        "command": "duplicate.execute"
       }]
     }
   },
