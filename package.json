@@ -8,7 +8,7 @@
   "engines": {
     "vscode": "^1.3.0"
   },
-  "icon": "icon.svg",
+  "icon": "icon.png",
   "homepage": "https://github.com/mrmlnc/vscode-duplicate/blob/master/README.md",
   "repository": {
     "type": "git",
