@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "co": "4.6.0",
-    "cp-file": "3.1.0",
+    "cp-file": "4.0.1",
     "lodash.escaperegexp": "4.1.2"
   },
   "scripts": {
