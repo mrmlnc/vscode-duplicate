@@ -1,12 +1,20 @@
 # Duplicate File
 
-> Ability to duplicate files in VS Code.
+> Ability to duplicate files and directories in VS Code.
 
 ![Duplicate File](https://cloud.githubusercontent.com/assets/7034281/17830152/d873e536-66cb-11e6-913b-b2eeeff5ade1.gif)
 
+## Donate
+
+If you want to thank me, or promote your Issue.
+
+[![Gratipay User](https://img.shields.io/gratipay/user/mrmlnc.svg?style=flat-square)](https://gratipay.com/~mrmlnc)
+
+> Sorry, but I have work and support for plugins requires some time after work. I will be glad of your support.
+
 ## Install
 
-  * Press `F1` and select `Extensions: Install Extensions`.
+  * Press <kbd>F1</kbd> and `select Extensions: Install Extensions`.
   * Search for and select `duplicate`.
 
 See the [extension installation guide](https://code.visualstudio.com/docs/editor/extension-gallery) for details.
@@ -17,7 +25,7 @@ See the [extension installation guide](https://code.visualstudio.com/docs/editor
 
 The first option:
 
-  1. Hover on a file name in explorer.
+  1. Hover on a file or directory name in explorer.
   2. Right-click and select `Duplicate file`.
   3. Enter the new path for the duplicate.
 
