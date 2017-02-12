@@ -1,6 +1,6 @@
 {
   "name": "vscode-duplicate",
-  "displayName": "Duplicate file",
+  "displayName": "Duplicate action",
   "description": "Ability to duplicate files in VS Code",
   "version": "1.1.0",
   "publisher": "mrmlnc",
@@ -17,9 +17,7 @@
   "keywords": [
     "duplicate",
     "copy",
-    "files",
     "file",
-    "directories",
     "directory"
   ],
   "categories": [
