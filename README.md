@@ -1,8 +1,6 @@
-# Duplicate File
+# vscode-duplicate
 
 > Ability to duplicate files and directories in VS Code.
-
-![Duplicate File](https://cloud.githubusercontent.com/assets/7034281/17830152/d873e536-66cb-11e6-913b-b2eeeff5ade1.gif)
 
 ## Donate
 
@@ -21,7 +19,7 @@ See the [extension installation guide](https://code.visualstudio.com/docs/editor
 
 ## Usage
 
-> If you do not specify a new extension, the previous will be saved.
+> If you do not specify a new extension, the previous **will be saved**.
 
 The first option:
 
