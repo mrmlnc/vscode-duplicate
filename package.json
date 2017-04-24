@@ -46,7 +46,7 @@
     "@types/lodash.escaperegexp": "^4.1.1",
     "@types/mocha": "^2.2.39",
     "@types/node": "^7.0.5",
-    "mocha": "^3.2.0",
+    "mocha": "^3.3.0",
     "tslint": "^4.4.2",
     "tslint-config-xo": "^1.1.0",
     "typescript": "^2.1.6",
