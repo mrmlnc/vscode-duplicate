@@ -91,7 +91,8 @@ async function duplicator(uri: vscode.Uri) {
 
 	return copy(uri.fsPath, newPath)
 		.then(() => {
-			if (oldPathStats.isFile()) {
+			const { openFileOnCopy } = vscode.workspace.getConfiguration('vscode-duplicate')
+			if (openFileOnCopy && oldPathStats.isFile()) {
 				return openFile(newPath);
 			}
 		})
