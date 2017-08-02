@@ -51,6 +51,11 @@ function promptOverwrite(filepath: string) {
 	return vscode.window.showWarningMessage(message, action);
 }
 
+async function openFile(path: string) {
+	const document = await vscode.workspace.openTextDocument(path);
+	return vscode.window.showTextDocument(document);
+}
+
 async function duplicator(uri: vscode.Uri) {
 	const oldParsedPath = path.parse(uri.fsPath);
 	const oldPathStats = await pathStat(uri.fsPath);
@@ -84,15 +89,21 @@ async function duplicator(uri: vscode.Uri) {
 		}
 	}
 
-	return copy(uri.fsPath, newPath).catch((err) => {
-		const errMsgRegExp = new RegExp(escapeRegExp(oldParsedPath.dir), 'g');
-		const errMsg = err.message
-			.replace(errMsgRegExp, '')
-			.replace(/[\\|\/]/g, '')
-			.replace(/`|'/g, '**');
+	return copy(uri.fsPath, newPath)
+		.then(() => {
+			if (oldPathStats.isFile()) {
+				return openFile(newPath);
+			}
+		})
+		.catch((err) => {
+			const errMsgRegExp = new RegExp(escapeRegExp(oldParsedPath.dir), 'g');
+			const errMsg = err.message
+				.replace(errMsgRegExp, '')
+				.replace(/[\\|\/]/g, '')
+				.replace(/`|'/g, '**');
 
-		vscode.window.showErrorMessage(`Error: ${errMsg}`);
-	});
+			vscode.window.showErrorMessage(`Error: ${errMsg}`);
+		});
 }
 
 export function activate(context: vscode.ExtensionContext) {
