@@ -39,6 +39,17 @@
       "editor/title/context": [{
         "command": "duplicate.execute"
       }]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Duplicate Action Configuration",
+      "properties": {
+        "vscode-duplicate.openFileOnCopy": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically open newly copied files"
+        }
+      }
     }
   },
   "devDependencies": {
