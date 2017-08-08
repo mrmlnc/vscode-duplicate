@@ -76,7 +76,7 @@ async function duplicator(uri: vscode.Uri) {
 
 	// If a user tries to copy a file on the same path
 	if (uri.fsPath === newPath) {
-		vscode.window.showErrorMessage('You can\'t to copy a file or directory on the same path.');
+		vscode.window.showErrorMessage('You can\'t copy a file or directory on the same path.');
 		return;
 	}
 
