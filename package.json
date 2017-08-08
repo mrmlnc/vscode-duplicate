@@ -42,7 +42,7 @@
     },
     "configuration": {
       "type": "object",
-      "title": "VSCode-Duplicate configuration",
+      "title": "Duplicate Action Configuration",
       "properties": {
         "vscode-duplicate.openFileOnCopy": {
           "type": "boolean",
