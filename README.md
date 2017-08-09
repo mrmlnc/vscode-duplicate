@@ -19,8 +19,6 @@ See the [extension installation guide](https://code.visualstudio.com/docs/editor
 
 ## Usage
 
-> If you do not specify a new extension, the previous **will be saved**.
-
 The first option:
 
   1. Hover on a file or directory name in explorer.
@@ -32,6 +30,36 @@ The second option:
   1. Open the file.
   2. Press `F1` and select `Duplicate file`.
   3. Enter the new path for the duplicate.
+
+## About file extension
+
+> :warning: If you do not specify a new extension, the previous **will be saved**.
+
+But you can use two special characters:
+
+  * `!!ext` – don't preserve original extension.
+  * `&&ext` – preserve original extension (available with `duplicate.keepOriginalExtension` option).
+
+For example:
+
+  * `nameOfFile!!ext` – create filepath without original extension
+  * `nameOfFile&&ext` – create filepath with original extension
+
+## Supported settings
+
+#### duplicate.openFileAfterCopy
+
+  * Type: `Boolean`
+  * Default: `true`
+
+Automatically open newly copied files.
+
+#### duplicate.keepOriginalExtension
+
+  * Type: `Boolean`
+  * Default: `true`
+
+Keep original extension if it not specified
 
 ## Keyboard shortcuts
 

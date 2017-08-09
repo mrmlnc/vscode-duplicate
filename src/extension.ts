@@ -1,78 +1,39 @@
-'use strict';
-
 import * as path from 'path';
-import * as fs from 'fs-extra';
 
 import * as vscode from 'vscode';
 import escapeRegExp = require('lodash.escaperegexp');
 
-function pathExists(filepath: string): Promise<Boolean> {
-	return new Promise((resolve) => {
-		fs.stat(filepath, (err) => resolve(!err));
-	});
-}
+import * as filepaths from './managers/filepaths';
+import * as fsUtils from './utils/fs';
+import * as promptUtils from './utils/prompt';
 
-function pathStat(filepath: string): Promise<fs.Stats> {
-	return new Promise((resolve, reject) => {
-		fs.stat(filepath, (err, stat) => {
-			if (err) {
-				return reject(err);
-			}
-			resolve(stat);
-		});
-	});
-}
+import { IPluginSettings } from './types';
 
-function copy(source: string, dest: string) {
-	return new Promise((resolve, reject) => {
-		fs.copy(source, dest, (err) => {
-			if (err) {
-				return reject(err);
-			}
-			resolve();
-		});
-	});
-}
+/**
+ * Open file after duplicate action.
+ */
+async function openFile(filepath: string) {
+	const document = await vscode.workspace.openTextDocument(filepath);
 
-function promptName(filename: string) {
-	return vscode.window.showInputBox({
-		placeHolder: 'Enter the new path for the duplicate.',
-		value: filename + '-copy'
-	});
-}
-
-function promptOverwrite(filepath: string) {
-	const message = `The path **${filepath}** alredy exists. Do you want to overwrite the existing path?`;
-	const action = {
-		title: 'OK',
-		isCloseAffordance: false
-	};
-
-	return vscode.window.showWarningMessage(message, action);
-}
-
-async function openFile(path: string) {
-	const document = await vscode.workspace.openTextDocument(path);
 	return vscode.window.showTextDocument(document);
 }
 
-async function duplicator(uri: vscode.Uri) {
-	const oldParsedPath = path.parse(uri.fsPath);
-	const oldPathStats = await pathStat(uri.fsPath);
+/**
+ * Duplicate action.
+ */
+async function duplicator(uri: vscode.Uri, settings: IPluginSettings) {
+	const oldPath = uri.fsPath;
+	const oldPathParsed = path.parse(oldPath);
+	const oldPathStats = await fsUtils.pathStat(oldPath);
 
 	// Get a new name for the resource
-	let newName = await promptName(oldParsedPath.name);
+	const newName = await promptUtils.name(oldPathParsed.name);
 	if (!newName) {
 		return;
 	}
 
-	// If the new path has no extension, then add it
-	if (oldPathStats.isFile() && path.extname(newName) === '') {
-		newName += oldParsedPath.ext;
-	}
-
 	// Get the new full path
-	const newPath = path.join(oldParsedPath.dir, newName);
+	const newPath = filepaths.buildFilepath(oldPathParsed, oldPathStats, newName, settings);
 
 	// If a user tries to copy a file on the same path
 	if (uri.fsPath === newPath) {
@@ -81,23 +42,23 @@ async function duplicator(uri: vscode.Uri) {
 	}
 
 	// Check if the current path exists
-	const newPathExists = await pathExists(newPath);
+	const newPathExists = await fsUtils.pathExists(newPath);
 	if (newPathExists) {
-		const userAnswer = await promptOverwrite(newPath);
+		const userAnswer = await promptUtils.overwrite(newPath);
 		if (!userAnswer) {
 			return;
 		}
 	}
 
-	return copy(uri.fsPath, newPath)
+	return fsUtils.copy(uri.fsPath, newPath)
 		.then(() => {
-			const { openFileOnCopy } = vscode.workspace.getConfiguration('vscode-duplicate')
-			if (openFileOnCopy && oldPathStats.isFile()) {
+			if (settings.openFileAfterCopy && oldPathStats.isFile()) {
 				return openFile(newPath);
 			}
+			return null;
 		})
-		.catch((err) => {
-			const errMsgRegExp = new RegExp(escapeRegExp(oldParsedPath.dir), 'g');
+		.catch((err: Error) => {
+			const errMsgRegExp = new RegExp(escapeRegExp(oldPathParsed.dir), 'g');
 			const errMsg = err.message
 				.replace(errMsgRegExp, '')
 				.replace(/[\\|\/]/g, '')
@@ -117,7 +78,9 @@ export function activate(context: vscode.ExtensionContext) {
 			uri = editor.document.uri;
 		}
 
-		duplicator(<vscode.Uri>uri);
+		const settings = vscode.workspace.getConfiguration().get<IPluginSettings>('duplicate');
+
+		duplicator(<vscode.Uri>uri, settings);
 	});
 
 	context.subscriptions.push(command);
