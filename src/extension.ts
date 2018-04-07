@@ -1,10 +1,10 @@
+import * as fs from 'fs-extra';
 import * as path from 'path';
 
 import escapeRegExp = require('lodash.escaperegexp');
 import * as vscode from 'vscode';
 
 import * as filepaths from './managers/filepaths';
-import * as fsUtils from './utils/fs';
 import * as promptUtils from './utils/prompt';
 
 import { IPluginSettings } from './types';
@@ -24,7 +24,7 @@ async function openFile(filepath: string): Promise<vscode.TextEditor> {
 async function duplicator(uri: vscode.Uri, settings: IPluginSettings): Promise<vscode.TextEditor | undefined> {
 	const oldPath = uri.fsPath;
 	const oldPathParsed = path.parse(oldPath);
-	const oldPathStats = await fsUtils.pathStat(oldPath);
+	const oldPathStats = await fs.stat(oldPath);
 
 	// Get a new name for the resource
 	const newName = await promptUtils.name(oldPathParsed.name);
@@ -43,7 +43,7 @@ async function duplicator(uri: vscode.Uri, settings: IPluginSettings): Promise<v
 	}
 
 	// Check if the current path exists
-	const newPathExists = await fsUtils.pathExists(newPath);
+	const newPathExists = await fs.pathExists(newPath);
 	if (newPathExists) {
 		const userAnswer = await promptUtils.overwrite(newPath);
 		if (!userAnswer) {
@@ -52,7 +52,7 @@ async function duplicator(uri: vscode.Uri, settings: IPluginSettings): Promise<v
 	}
 
 	try {
-		await fsUtils.copy(uri.fsPath, newPath);
+		await fs.copy(uri.fsPath, newPath);
 
 		if (settings.openFileAfterCopy && oldPathStats.isFile()) {
 			return openFile(newPath);
