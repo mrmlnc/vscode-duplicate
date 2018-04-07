@@ -1,44 +1,8 @@
 {
-	"extends": [
-		"tslint-config-xo/esnext"
-	],
+	"extends": ["tslint-config-mrmlnc"],
 	"rules": {
-		"object-curly-spacing": false,
-		"ter-arrow-parens": true,
-
-		"adjacent-overload-signatures": true,
-		"member-access": true,
-		"member-ordering": [
-			true,
-			{
-				"order": [
-					"static-field",
-					"instance-field",
-					"constructor",
-					"public-instance-method",
-					"protected-instance-method",
-					"private-instance-method"
-				]
-			}
-		],
-		"no-empty-interface": "true",
-		"no-reference": true,
-		"no-var-requires": true,
-		"typedef-whitespace": [
-			true,
-			{
-				"call-signature": "nospace",
-				"index-signature": "nospace",
-				"parameter": "nospace",
-				"property-declaration": "nospace",
-				"variable-declaration": "nospace"
-			}
-		],
-		"unified-signatures": true,
-		"variable-name": [
-			true,
-			"check-format",
-			"allow-leading-underscore"
-		]
+		"no-require-imports": false,
+		"match-default-export-name": false,
+		"max-file-line-count": false
 	}
 }

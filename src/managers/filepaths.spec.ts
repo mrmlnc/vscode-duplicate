@@ -3,19 +3,18 @@ import * as path from 'path';
 
 import * as manager from './filepaths';
 
-function getBuildedFilepath(oldName: string, newName: string, isFile: boolean, keep: boolean) {
+function getBuildedFilepath(oldName: string, newName: string, isFile: boolean, keep: boolean): string {
 	const oldPath = path.parse(`/Users/name/Documents/${oldName}`);
 
 	return manager.buildFilepath(
 		oldPath,
-		<any>{ isFile: () => isFile },
+		{ isFile: () => isFile } as any, /* tslint:disable-line no-any */
 		newName,
 		{ keepOriginalExtension: keep, openFileAfterCopy: false }
 	);
 }
 
 describe('Managers → Filepaths', () => {
-
 	describe('.buildFilepath', () => {
 		it('should build path to file', () => {
 			const expected = '/Users/name/Documents/test.ts';
@@ -81,5 +80,4 @@ describe('Managers → Filepaths', () => {
 			assert.equal(actual, expected);
 		});
 	});
-
 });

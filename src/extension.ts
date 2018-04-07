@@ -1,7 +1,7 @@
 import * as path from 'path';
 
-import * as vscode from 'vscode';
 import escapeRegExp = require('lodash.escaperegexp');
+import * as vscode from 'vscode';
 
 import * as filepaths from './managers/filepaths';
 import * as fsUtils from './utils/fs';
@@ -12,8 +12,8 @@ import { IPluginSettings } from './types';
 /**
  * Open file after duplicate action.
  */
-async function openFile(filepath: string) {
-	const document = await vscode.workspace.openTextDocument(filepath);
+async function openFile(filepath: string): Promise<vscode.TextEditor> {
+	const document = await (vscode.workspace.openTextDocument(filepath) as Promise<vscode.TextDocument>);
 
 	return vscode.window.showTextDocument(document);
 }
@@ -21,7 +21,7 @@ async function openFile(filepath: string) {
 /**
  * Duplicate action.
  */
-async function duplicator(uri: vscode.Uri, settings: IPluginSettings) {
+async function duplicator(uri: vscode.Uri, settings: IPluginSettings): Promise<vscode.TextEditor | undefined> {
 	const oldPath = uri.fsPath;
 	const oldPathParsed = path.parse(oldPath);
 	const oldPathStats = await fsUtils.pathStat(oldPath);
@@ -38,6 +38,7 @@ async function duplicator(uri: vscode.Uri, settings: IPluginSettings) {
 	// If a user tries to copy a file on the same path
 	if (uri.fsPath === newPath) {
 		vscode.window.showErrorMessage('You can\'t copy a file or directory on the same path.');
+
 		return;
 	}
 
@@ -69,19 +70,20 @@ async function duplicator(uri: vscode.Uri, settings: IPluginSettings) {
 	return;
 }
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext): void {
 	const command = vscode.commands.registerCommand('duplicate.execute', (uri: vscode.TextDocument | vscode.Uri) => {
+		const settings = vscode.workspace.getConfiguration().get('duplicate') as IPluginSettings;
+
 		if (!uri || !(<vscode.Uri>uri).fsPath) {
 			const editor = vscode.window.activeTextEditor;
 			if (!editor) {
 				return;
 			}
-			uri = editor.document.uri;
+
+			return duplicator(<vscode.Uri>editor.document.uri, settings);
 		}
 
-		const settings = vscode.workspace.getConfiguration().get('duplicate') as IPluginSettings;
-
-		duplicator(<vscode.Uri>uri, settings);
+		return duplicator(<vscode.Uri>uri, settings);
 	});
 
 	context.subscriptions.push(command);
