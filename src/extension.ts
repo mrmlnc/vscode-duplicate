@@ -50,22 +50,23 @@ async function duplicator(uri: vscode.Uri, settings: IPluginSettings) {
 		}
 	}
 
-	return fsUtils.copy(uri.fsPath, newPath)
-		.then(() => {
-			if (settings.openFileAfterCopy && oldPathStats.isFile()) {
-				return openFile(newPath);
-			}
-			return null;
-		})
-		.catch((err: Error) => {
-			const errMsgRegExp = new RegExp(escapeRegExp(oldPathParsed.dir), 'g');
-			const errMsg = err.message
-				.replace(errMsgRegExp, '')
-				.replace(/[\\|\/]/g, '')
-				.replace(/`|'/g, '**');
+	try {
+		await fsUtils.copy(uri.fsPath, newPath);
 
-			vscode.window.showErrorMessage(`Error: ${errMsg}`);
-		});
+		if (settings.openFileAfterCopy && oldPathStats.isFile()) {
+			return openFile(newPath);
+		}
+	} catch (err) {
+		const errMsgRegExp = new RegExp(escapeRegExp(oldPathParsed.dir), 'g');
+		const errMsg = err.message
+			.replace(errMsgRegExp, '')
+			.replace(/[\\|\/]/g, '')
+			.replace(/`|'/g, '**');
+
+		vscode.window.showErrorMessage(`Error: ${errMsg}`);
+	}
+
+	return;
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -78,7 +79,7 @@ export function activate(context: vscode.ExtensionContext) {
 			uri = editor.document.uri;
 		}
 
-		const settings = vscode.workspace.getConfiguration().get<IPluginSettings>('duplicate');
+		const settings = vscode.workspace.getConfiguration().get('duplicate') as IPluginSettings;
 
 		duplicator(<vscode.Uri>uri, settings);
 	});
