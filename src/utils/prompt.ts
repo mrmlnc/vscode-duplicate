@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 export function name(filename: string) {
 	return vscode.window.showInputBox({
 		placeHolder: 'Enter the new path for the duplicate.',
-		value: filename + '-copy'
+		value: filename.split('.').map((el, i) => i === 0 ? `${el}-copy` : el).join('.')
 	});
 }
 
