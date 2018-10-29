@@ -59,11 +59,11 @@ Automatically open newly copied files.
   * Type: `Boolean`
   * Default: `true`
 
-Keep original extension if it not specified
+Keep original extension if it not specified.
 
 ## Keyboard shortcuts
 
-For changes keyboard shortcuts, create a new rule in `File -> Preferences -> Keyboard Shortcuts`:
+To change keyboard shortcuts, create a new rule in `File -> Preferences -> Keyboard Shortcuts`:
 
 ```json
 {
