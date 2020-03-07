@@ -1,14 +1,14 @@
 # vscode-duplicate
 
-> Ability to duplicate files and directories in VS Code.
+Duplicate files and directories in VS Code.
 
-## Donate
+## Support and PRs welcome
 
-If you want to thank me, or promote your Issue.
+I'm currently busy with work and don't have time to support plugins and modules. I will be glad of your support or PRs.
+
+If you'd like to thank me, or promote your issue, you can donate to my PayPal.
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/mrmlnc)
-
-> Sorry, but I have work and support for plugins and modules requires some time after work. I will be glad of your support or PR's.
 
 ## Install
 
@@ -19,29 +19,29 @@ See the [extension installation guide](https://code.visualstudio.com/docs/editor
 
 ## Usage
 
-The first option:
+Method one:
 
-  1. Hover on a file or directory name in explorer.
-  2. Right-click and select `Duplicate file`.
-  3. Enter the new path for the duplicate.
+  1. Hover on a file or directory name in explorer
+  2. Right-click and select `Duplicate file`
+  3. Enter the new path for the duplicate
 
-The second option:
+Methond two:
 
-  1. Open the file.
-  2. Press `F1` and select `Duplicate file`.
-  3. Enter the new path for the duplicate.
+  1. Open a file
+  2. Press `F1` and select `Duplicate file`
+  3. Enter the new path for the duplicate
 
-## About file extension
+## Setting a file extension
 
-> :warning: If you do not specify a new extension, the previous **will be saved**.
+When setting the name of the new file, you can specify a file extension by three methods:
 
-But you can use two special characters:
-
-  * `!!ext` – don't preserve original extension.
-  * `&&ext` – preserve original extension (available with `duplicate.keepOriginalExtension` option).
+  * Don't set anything - the previous will be preserved
+  * `!!ext` – don't preserve original extension
+  * `&&ext` – preserve original extension (override with `duplicate.keepOriginalExtension`)
 
 For example:
 
+  * `nameOfFile` - create filepath with original extension
   * `nameOfFile!!ext` – create filepath without original extension
   * `nameOfFile&&ext` – create filepath with original extension
 
@@ -74,8 +74,8 @@ To change keyboard shortcuts, create a new rule in `File -> Preferences -> Keybo
 
 ## Changelog
 
-See the [Releases section of our GitHub project](https://github.com/mrmlnc/vscode-duplicate/releases) for changelogs for each release version.
+The [Releases section of our GitHub project](https://github.com/mrmlnc/vscode-duplicate/releases) has a changelog for each release.
 
 ## License
 
-This software is released under the terms of the MIT license.
+[MIT](https://github.com/mrmlnc/vscode-duplicate/blob/master/LICENSE)
