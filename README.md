@@ -72,6 +72,16 @@ To change keyboard shortcuts, create a new rule in `File -> Preferences -> Keybo
 }
 ```
 
+In case of shortcut overlaps you might want to specify a when clause, for example "only when the file explorer is in focus":
+
+```json
+{
+  "key": "ctrl+shift+d",
+  "command": "duplicate.execute",
+  "when": "explorerViewletFocus"
+}
+```
+
 ## Changelog
 
 See the [Releases section of our GitHub project](https://github.com/mrmlnc/vscode-duplicate/releases) for changelogs for each release version.
