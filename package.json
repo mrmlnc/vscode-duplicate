@@ -1,18 +1,18 @@
 {
-  "name": "vscode-duplicate",
+  "name": "@trandaison/vscode-duplicate",
   "displayName": "Duplicate action",
   "description": "Ability to duplicate files in VS Code",
-  "version": "1.2.1",
-  "publisher": "mrmlnc",
+  "version": "2.0.0",
+  "publisher": "trandaison",
   "license": "MIT",
   "engines": {
     "vscode": "^1.13.0"
   },
   "icon": "icon.png",
-  "homepage": "https://github.com/mrmlnc/vscode-duplicate/blob/master/README.md",
+  "homepage": "https://github.com/trandaison/vscode-duplicate/blob/master/README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mrmlnc/vscode-duplicate"
+    "url": "https://github.com/trandaison/vscode-duplicate"
   },
   "keywords": [
     "duplicate",
@@ -22,9 +22,6 @@
   ],
   "categories": [
     "Other"
-  ],
-  "activationEvents": [
-    "onCommand:duplicate.execute"
   ],
   "main": "./out/extension.js",
   "contributes": {
